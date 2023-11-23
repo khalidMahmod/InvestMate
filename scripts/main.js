@@ -113,6 +113,7 @@ function appendMessage(role, message) {
     messageElement.classList.add(role);
 
     const iconSpan = document.createElement('span');
+    iconSpan.style.paddingRight = '5px';
 
     // Choose the icon based on the role
     if (role === "user") {
@@ -199,7 +200,7 @@ function drawAllocationCanvas(labels, data) {
     }
 
     allocationChartInstance = new Chart(ctx, {
-        type: 'pie', // or 'doughnut' for a doughnut chart
+        type: 'doughnut', 
         data: {
             labels: labels,
             datasets: [{
@@ -230,8 +231,15 @@ function drawAllocationCanvas(labels, data) {
 }
 
 function createYearlyRotTable(yearlyRotData) {
-    // Create table elements
-    const table = document.createElement('table');
+    const tableId = 'yearlyReturnOnInvestmentTable'; // Replace with your desired table ID
+    let table = document.getElementById(tableId);
+
+    if (table) {
+        table.remove();
+    }
+    
+    table = document.createElement('table');
+    table.id = tableId;
     table.className = 'table table-striped table-bordered table-hover';
 
     const thead = document.createElement('thead');

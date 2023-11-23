@@ -167,14 +167,18 @@ fieldset legend { text-align: center; font-size: large; padding: 10px; }
     overflow: auto;
     padding: 10px;
 }
-p.note { color: grey; padding-top: 10px; }
-
+p.note { color: grey; padding-top: 10px; font-size: 10px;}
+.output.loading #chat-widget {
+    pointer-events: none; /* Disable events while loading */
+    opacity: 0.6; /* Semi-transparent, indicating it's unusable while loading */
+}
 .close-btn {
     cursor: pointer;
-    position: absolute;
-    right: 30px;
-    font-size: 36px; /* Adjust as needed */
-    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    font-size: 36px;
 }
 .content-row {
     background-color: #f0f0f0;
@@ -232,8 +236,24 @@ a.focus-link:focus::before {
     display: block;
     box-sizing: border-box;
 }
+table thead th {
+    background-color: #004d66; /* Green background */
+    color: white; /* White text color */
+    font-size: 16px; /* Larger font size */
+    font-weight: bold; /* Bold font weight */
+    padding: 10px; /* Padding for spacing */
+    text-align: center; /* Center the text */
+    border-bottom: 2px solid #ddd; /* Bottom border for each header cell */
+}
+table tbody td {
+    font-size: 14px; /* Standard font size for body */
+    color: #333; /* Darker text color for readability */
+    padding: 8px; /* Padding for spacing */
+    text-align: left; /* Align text to the left */
+    border-bottom: 1px solid #ddd; /* Bottom border for each cell */
+}
 
-#allocationChart {width: 350px !important; height: 250px !important; display: inline-block; box-sizing: border-box;}
+#allocationChart {width: 350px !important; height: 250px !important; display: inline-block !important; box-sizing: border-box;}
 .loader {
     display: none; /* Hidden by default */
     position: absolute; /* Stay in place */
@@ -255,12 +275,15 @@ a.focus-link:focus::before {
 }
 
 .user {
-    background-color: #FFFFFF; /* White background */
-    color: #000000; /* You might want to change text color for better readability, considering the background is white */
+    background-color: #004d66; /* White background */
+    color: #fff; /* You might want to change text color for better readability, considering the background is white */
     text-align: left;
     padding: 15px 5px;
     /* Light color border-top */
-    border-bottom: 1px solid #e0e0e0; /
+    border-bottom: 1px solid #e0e0e0; 
+    line-height: 1.4;
+    padding: 8px;
+    font-size: 14px;
 }
 
 .assistant {
@@ -268,4 +291,5 @@ a.focus-link:focus::before {
     border-bottom: 1px solid #e0e0e0;
     padding: 15px 5px;
     background-color: #F7F7F8;
+    font-size: 14px;
 }
