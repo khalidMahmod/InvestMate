@@ -46,13 +46,17 @@ function handleSubmit(event) {
 
     const url = 'https://apitest.iqiglobal.com/api/v1/chats/calculate';
 
+    var isShariahCompliantChecked = document.getElementById('shariah_compliant').checked;
+
     const params = {
         financial_goal: event.target.financial_goal.value,
         duration: event.target.duration.value,
         risk_level: event.target.risk_level.value,
         monthly_savings: event.target.monthly_savings.value,
         monthly_income: event.target.monthly_income.value,
+        is_shariah_compliant: isShariahCompliantChecked
     };
+    
     const filteredData = Object.keys(params).reduce((acc, key) => {
         if (params[key] !== '') {
             acc[key] = params[key];
@@ -87,12 +91,12 @@ function handleSubmit(event) {
 
         var durationElement = document.querySelector('.text_duration');
         if (durationElement) {
-            durationElement.textContent = data.duration;
+            durationElement.textContent = filteredData.duration;
         }
 
         var targetAmount = document.querySelector('.text_target_amount');
         if (targetAmount) {
-            targetAmount.textContent = data.target_amount;
+            targetAmount.textContent = filteredData.financial_goal;
         }
 
         var textMonthlyInvestment = document.querySelector('.text_monthly_investment');
@@ -118,16 +122,15 @@ function appendMessage(role, message) {
     // Choose the icon based on the role
     if (role === "user") {
         iconSpan.innerHTML = '<i class="bi bi-person-fill me-2"></i>';
+        const paragraph = document.createElement('span');
+        paragraph.innerHTML = message;
+        messageElement.appendChild(iconSpan);
+        messageElement.appendChild(paragraph);
     } else {
         iconSpan.innerHTML = '<i class="bi bi-robot me-2"></i> ';
+        messageElement.appendChild(iconSpan);
+        createAssistantMessage(messageElement, message);
     }
-
-    const paragraph = document.createElement('span');
-    paragraph.innerHTML = message; 
-
-    // Append the icon and message to the messageElement container
-    messageElement.appendChild(iconSpan);
-    messageElement.appendChild(paragraph);
 
     chatMessages.appendChild(messageElement);
     if (role == 'user') {
@@ -157,7 +160,8 @@ function callInvestMate(params, requestParams) {
         "Financial Goal: " + requestParams.financial_goal + " RM, " +
         "Duration: " + requestParams.duration + " years, " +
         "Monthly Investment: " + params.monthly_investment + " RM, " + 
-        "Risk Toleration: " + requestParams.risk_level + ".";
+        "Risk Toleration: " + requestParams.risk_level + ", " +
+        "Looking for shariah compliant investment schemes: " + requestParams.is_shariah_compliant + ".";
 
     if (requestParams.monthly_savings && requestParams.monthly_savings > 0) {
         message += "Provide insights based on my monthly income and savings. My Monthly Income is: " + requestParams.monthly_income + " RM and " +
@@ -173,6 +177,60 @@ function hideInitialPrompts(){
 
     var initialPrompts = document.querySelector('.initial-prompts');
     initialPrompts.classList.add('d-none');
+}
+
+function createAssistantMessage(container, message) {
+    message = message.replace(/Main Suggestion:.*?\n/, ' ');
+    // Splitting the message into main content and detailed explanation
+    const [mainContent, detailedContent] = message.split('Detailed Explanation:');
+
+    const mainContentSpan = document.createElement('span');
+    mainContentSpan.innerHTML = mainContent;
+    container.appendChild(mainContentSpan);
+
+    if (detailedContent) {
+        const parts = detailedContent.split('Follow-up Questions:');
+        
+        const questions = parts[1].match(/\d\..+?<br>/g).map(q => q.slice(3, -4));
+
+        populateFollowUpQuestions(questions);
+
+        const detailedContentSpan = document.createElement('span');
+        const readMoreButton = document.createElement('button');
+        readMoreButton.textContent = 'Read More';
+        readMoreButton.classList.add('btn', 'btn-primary'); // Bootstrap button classes
+        readMoreButton.onclick = function() {
+            detailedContentSpan.style.display = 'block';
+            readMoreButton.style.display = 'none';
+        };
+        container.appendChild(readMoreButton);
+
+        detailedContentSpan.innerHTML = parts[0];
+        detailedContentSpan.style.display = 'none';
+        container.appendChild(detailedContentSpan);
+    }
+}
+
+function populateFollowUpQuestions(questions) {
+    const initialPromptsDiv = document.querySelector('.initial-prompts');
+    const links = initialPromptsDiv.querySelectorAll('a');
+    questions.forEach((question, index) => {
+        if (links[index]) {
+            links[index].textContent = question;
+        }
+    });
+
+    // Make the div visible if it's not
+    initialPromptsDiv.classList.remove('d-none');
+}
+
+// Function to create a link for each question
+function createLink(question, index) {
+    const link = document.createElement('a');
+    link.href = `#question-${index}`; // Modify this href to point to the appropriate destination
+    link.textContent = question;
+    link.classList.add('question-link');
+    return link;
 }
 
 function callInvestMateApi(message, withData) {
@@ -294,7 +352,6 @@ function createYearlyRotTable(yearlyRotData) {
     // Replace 'yourTableContainer' with the actual ID or class of your container element
     document.querySelector('#yearlyRotTable').appendChild(table);
 }
-
 
 function drawYearlyReturnOnInvestment(labels, worstData, avgData, bestData) {
     // Create the chart

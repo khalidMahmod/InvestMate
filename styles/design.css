@@ -274,6 +274,8 @@ table tbody td {
     100% { transform: translate(-50%, -50%) rotate(360deg); }
 }
 
+.shariah_compliant_checkbox label { width: 275px; }
+
 .user {
     background-color: #004d66; /* White background */
     color: #fff; /* You might want to change text color for better readability, considering the background is white */
