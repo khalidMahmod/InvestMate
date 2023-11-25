@@ -152,12 +152,15 @@
                                 <a href="#link3" class="focus-link prompt-link">Is there any shariah compliant investment scheme from hong leong bank?</a>
                                 <a href="#link4" class="focus-link prompt-link">Suggest some low risk investment schemes from Hong Leong Bank?</a>
                             </div>
-                            <div class="chat-input-container">
-                                <div class="input-wrapper">
-                                    <textarea id="userInput" class="form-control" placeholder="Ask InvestMate ..."></textarea>
+                            <div class="chat-input-container flex flex-row position-sticky fixed-bottom" >
+                                <div class="input-wrapper " style="max-width: 85%">
+                                    <textarea id="userInput" class="form-control" placeholder="Ask InvestMate ..." ></textarea>
+                                    
+                                </div>
+                                <div class="input-wrapper" style="max-width: 15%">
                                     <button type="button" class="btn btn-primary messageInvestMate" id="sendMessageButton">Send</button>
                                 </div>
-                                <small class="text-center text-muted d-block">InvestMate can make mistakes. Consider checking important information.</small>
+                                <div class="text-center text-muted" style="overflow: hidden;">InvestMate can make mistakes. Consider checking important information.</div>
                             </div>
                         </div>
                     </div>
