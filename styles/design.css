@@ -44,7 +44,7 @@ label {display: inline-block; width: 190px; font-size: larger; font-size: 16px; 
     color: #333333;
 }
 #chat-messages {
-    max-height: 60vh;
+    max-height: 70vh;
     overflow-y: scroll;
     margin-bottom: 20px;
 }
