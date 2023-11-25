@@ -33,11 +33,19 @@
                                             <fieldset>
                                                 <legend class="col-form-label col-md-6">CUSTOMER INFORMATION</legend>
                                                 <div class="form-group">
-                                                    <label>I want to achieve RM</label>
-                                                    <input type="number" name="financial_goal" placeholder="300000" step="50000" required>
+                                                    <label for="investmentExperience">Investment Experience Level<span class="text-danger">*</span></label>
+                                                    <select class="form-control" id="investment_experience" name="investment_experience">
+                                                        <option value="beginner">Beginner - New to investments</option>
+                                                        <option value="intermediate">Intermediate - Some experience</option>
+                                                        <option value="advanced">Advanced - Experienced investor</option>
+                                                    </select>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label>In</label>
+                                                    <label>I want to achieve RM<span class="text-danger">*</span></label>
+                                                    <input type="number" name="financial_goal" placeholder="300000" step="1000" required>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>In<span class="text-danger">*</span></label>
                                                     <select name="duration" required>
                                                         <option value="3">3 Years</option>
                                                         <option value="5">5 Years</option>
@@ -46,7 +54,7 @@
                                                 </div>
 
                                                 <div class="form-group">
-                                                    <label>Risk Level</label>
+                                                    <label>Risk Level<span class="text-danger">*</span></label>
                                                     <select name="risk_level" required>
                                                         <option value="lowest">Lowest</option>
                                                         <option value="low">Low</option>
@@ -105,10 +113,17 @@
                                                     <tr>
                                                         <td><span class="text_target_amount"></span> RM</td>
                                                         <td><span class="text_duration"></span> Years</td>
-                                                        <td><span class="text_monthly_investment"></span></td>
+                                                        <td><span class="text_monthly_investment"></span> RM</td>
                                                     </tr>
                                                 </tbody>
                                             </table>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <p class="lead">Projected returns: </p>
+                                            <div id="yearlyRotTable"></div>
                                         </div>
                                     </div>
                                     <hr>
@@ -120,13 +135,7 @@
                                         </div>
                                     </div>
                                     <hr>
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <p class="lead">Projected returns: </p>
-                                            <div id="yearlyRotTable"></div>
-                                        </div>
-                                    </div>
-                                    <hr>
+                                    
                                     <div class="row">
                                         <div class="col-md-12">
                                             <canvas id="investmentChart"></canvas>
@@ -156,12 +165,15 @@
                                 <a href="#link3" class="focus-link prompt-link">Is there any shariah compliant investment scheme from hong leong bank?</a>
                                 <a href="#link4" class="focus-link prompt-link">Suggest some low risk investment schemes from Hong Leong Bank?</a>
                             </div>
-                            <div class="chat-input-container">
+                            <div class="chat-input-container flex flex-row position-sticky fixed-bottom" >
+                                <div class="input-wrapper ">
+                                    <textarea id="userInput" class="form-control" placeholder="Ask InvestMate ..." ></textarea>
+                                    
+                                </div>
                                 <div class="input-wrapper">
-                                    <textarea id="userInput" class="form-control" placeholder="Ask InvestMate ..."></textarea>
                                     <button type="button" class="btn btn-primary messageInvestMate" id="sendMessageButton">Send</button>
                                 </div>
-                                <small class="text-center text-muted d-block">InvestMate can make mistakes. Consider checking important information.</small>
+                                <div class="text-center text-muted investmate-disclaimer">InvestMate can make mistakes. Consider checking important information.</div>
                             </div>
                         </div>
                     </div>

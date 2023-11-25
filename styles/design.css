@@ -27,25 +27,25 @@ header {
     width: 100%;
     max-width: 500px;
 }
-
-label {display: inline-block; width: 190px; font-size: larger; font-size: 16px; color: #333333;}
+.navbar-light .navbar-brand, .navbar-light .navbar-brand:hover  { color: white; }
+label {display: inline-block; width: 190px; font-size: larger; font-size: 14px; color: #333333;}
 .form input[type="text"],
 .form input[type="number"],
 .form select,
 .form textarea {
-    margin-bottom: 10px;
-    padding: 10px;
+    padding: 8px;
     border: 1px solid #ccc;
     border-radius: 4px;
-    font-size: 18px;
+    font-size: 14px;
     display: inline-block;
     width: 270px;
-    font-family: monospace;
+    font-family: 'Nunito', sans-serif;
     color: #333333;
 }
 #chat-messages {
-    max-height: 87vh;
-    overflow-y: auto;
+    max-height: 58vh;
+    overflow-y: scroll;
+    margin-bottom: 20px;
 }
 
 button {
@@ -80,7 +80,7 @@ button {
 .carousel { background: beige; height: 140px; padding: 10px; }
 
 .input-wrapper { display: flex; align-items: center; justify-content: space-between; }
-
+.investmate-disclaimer { overflow: hidden; font-size: 10px;}
 textarea {
     flex-grow: 1;
     border: none;
@@ -88,6 +88,9 @@ textarea {
     padding: 10px;
     resize: none;
     border-radius: 4px;
+    width: 80%;
+    position: sticky;
+    bottom: 0;
 }
 
 button.messageInvestMate {
@@ -113,7 +116,9 @@ button.messageInvestMate:focus {
 }
 
 #userInput {
-    flex-grow: 1; /* Input field takes available space */
+    max-height: 150px; /* Adjust as needed */
+    overflow-y: auto;
+    padding-right: 90px;
 }
 
 .output {
@@ -207,13 +212,11 @@ p.note { color: grey; padding-top: 10px; font-size: 10px;}
 }
 
 a.focus-link {
-    text-decoration: none; /* Remove default underline */
-    color: #333; /* Link text color */
-    padding: 10px 20px; /* Add padding for spacing */
-
-    position: relative; /* Enable positioning for pseudo-element */
-
-    /* Transition for smooth animation */
+    text-decoration: none; 
+    color: #333;
+    padding: 10px 20px; 
+    background: beige;
+    position: relative; 
     transition: background-color 0.2s;
 }
 

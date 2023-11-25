@@ -49,6 +49,7 @@ function handleSubmit(event) {
     var isShariahCompliantChecked = document.getElementById('shariah_compliant').checked;
 
     const params = {
+        investment_experience: event.target.investment_experience.value,
         financial_goal: event.target.financial_goal.value,
         duration: event.target.duration.value,
         risk_level: event.target.risk_level.value,
@@ -157,6 +158,7 @@ function scrollToLatestUserMessage(chatMessages) {
 function callInvestMate(params, requestParams) {
     hideInitialPrompts();
     var message = "Give me investment suggestions from Hong Leong Bank with following details: \n " +
+        "Investment Experience: " + requestParams.investment_experience + ", " +
         "Financial Goal: " + requestParams.financial_goal + " RM, " +
         "Duration: " + requestParams.duration + " years, " +
         "Monthly Investment: " + params.monthly_investment + " RM, " + 
@@ -181,17 +183,19 @@ function hideInitialPrompts(){
 
 function createAssistantMessage(container, message) {
     message = message.replace(/Main Suggestion:.*?\n/, ' ');
-    // Splitting the message into main content and detailed explanation
     const [mainContent, detailedContent] = message.split('Detailed Explanation:');
 
     const mainContentSpan = document.createElement('span');
-    mainContentSpan.innerHTML = mainContent;
+    console.log("Main Content");
+    console.log(mainContent);
+    const updatedResponse = mainContent.replace(/1\. ?<strong>Main Suggestion:<\/strong><br>|1\. Main Suggestion:<br><br>|### Main Suggestions:<br>|<strong>Main Suggestion:<\/strong><br>/g, '');
+    mainContentSpan.innerHTML = updatedResponse;
     container.appendChild(mainContentSpan);
 
     if (detailedContent) {
         const parts = detailedContent.split('Follow-up Questions:');
-        
-        const questions = parts[1].match(/\d\..+?<br>/g).map(q => q.slice(3, -4));
+        const matches = parts[1] ? parts[1].match(/\d\..+?<br>/g) : null;
+        const questions = matches ? matches.map(q => q.slice(3, -4)) : [];
 
         populateFollowUpQuestions(questions);
 
@@ -216,7 +220,7 @@ function populateFollowUpQuestions(questions) {
     const links = initialPromptsDiv.querySelectorAll('a');
     questions.forEach((question, index) => {
         if (links[index]) {
-            links[index].textContent = question;
+            links[index].innerHTML = question;
         }
     });
 
