@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('sendMessageButton').addEventListener('click', () => {
         const message = document.getElementById('userInput').value;
         hideInitialPrompts();
-        callInvestMateApi(message);
+        callInvestMateApi(message, false);
         document.getElementById('userInput').value = '';
     });
 
@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
             event.preventDefault(); // Prevent default anchor behavior
             const message = event.target.textContent;
             hideInitialPrompts();
-            callInvestMateApi(message);
+            callInvestMateApi(message, false);
         });
     });
 });
@@ -130,7 +130,25 @@ function appendMessage(role, message) {
     messageElement.appendChild(paragraph);
 
     chatMessages.appendChild(messageElement);
-    chatMessages.scrollTop = chatMessages.scrollHeight;
+    if (role == 'user') {
+        scrollToLatestUserMessage(chatMessages);
+    } else {
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+}
+
+function scrollToLatestUserMessage(chatMessages) {
+    // Get the last user message element
+    const userMessages = chatMessages.getElementsByClassName('user');
+    const lastUserMessage = userMessages[userMessages.length - 1];
+
+    if (lastUserMessage) {
+        // Calculate the top position of the last user message relative to the chatMessages div
+        const topPos = lastUserMessage.offsetTop;
+
+        // Scroll to the top position of the last user message
+        chatMessages.scrollTop = topPos;
+    }
 }
 
 function callInvestMate(params, requestParams) {
@@ -146,7 +164,7 @@ function callInvestMate(params, requestParams) {
                     "My monthly savings is: " + requestParams.monthly_savings + " RM";
     }
     
-    callInvestMateApi(message);
+    callInvestMateApi(message, true);
 }
 
 function hideInitialPrompts(){
@@ -157,7 +175,7 @@ function hideInitialPrompts(){
     initialPrompts.classList.add('d-none');
 }
 
-function callInvestMateApi(message) {
+function callInvestMateApi(message, withData) {
     const loader = document.getElementById('loader');
     const loaderContainer = document.querySelector('.output');
 
@@ -174,7 +192,7 @@ function callInvestMateApi(message) {
             'Content-Type': 'application/json',
             'Authorization': 'n3@m0kh@0n@7f2!s0A16asdljasdaslsa8asdksd93234'
         },
-        body: JSON.stringify({ prompt: message })
+        body: JSON.stringify({ prompt: message, with_data: withData })
     })
     .then(response => response.json())
     .then(data => {

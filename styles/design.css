@@ -76,7 +76,7 @@ button {
 .chat-input-container {
     position: relative;
 }
-
+#initial-help-text { position: absolute; top: 30%; left: 30%; }
 .carousel { background: beige; height: 140px; padding: 10px; }
 
 .input-wrapper { display: flex; align-items: center; justify-content: space-between; }
