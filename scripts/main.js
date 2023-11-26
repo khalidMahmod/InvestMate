@@ -203,6 +203,18 @@ function createAssistantMessage(container, message) {
         const readMoreButton = document.createElement('button');
         readMoreButton.textContent = 'Read More';
         readMoreButton.classList.add('btn', 'btn-primary'); // Bootstrap button classes
+        
+        const investNowButton = document.createElement('button');
+        investNowButton.textContent = 'Invest Now';
+        investNowButton.classList.add('btn', 'btn-success');
+
+        
+
+        // Optionally, if the button should act as a link, you can add an event listener
+        investNowButton.addEventListener('click', function() {
+            window.location.href = 'yourLinkUrl'; // Replace with your desired URL
+        });
+
         readMoreButton.onclick = function() {
             detailedContentSpan.style.display = 'block';
             readMoreButton.style.display = 'none';
