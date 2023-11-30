@@ -206,13 +206,13 @@ function createAssistantMessage(container, message) {
         
         const investNowButton = document.createElement('button');
         investNowButton.textContent = 'Invest Now';
-        investNowButton.classList.add('btn', 'btn-success');
-
-        
+        investNowButton.classList.add('btn', 'btn-success', 'm-2');
 
         // Optionally, if the button should act as a link, you can add an event listener
         investNowButton.addEventListener('click', function() {
-            window.location.href = 'yourLinkUrl'; // Replace with your desired URL
+            investNowButton.addEventListener('click', function() {
+                window.open('https://www.hlb.com.my/rib/app/fo/login?t=1&s=230608005240?icp=hlb-en-pdp-cta-txt-investment-unit-trust-1', '_blank');
+            });
         });
 
         readMoreButton.onclick = function() {
@@ -220,6 +220,7 @@ function createAssistantMessage(container, message) {
             readMoreButton.style.display = 'none';
         };
         container.appendChild(readMoreButton);
+        container.appendChild(investNowButton);
 
         detailedContentSpan.innerHTML = parts[0];
         detailedContentSpan.style.display = 'none';

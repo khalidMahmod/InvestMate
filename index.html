@@ -191,6 +191,20 @@
         <script src="scripts/jquery.slim.min.js"></script>
 
         <script type="text/javascript">
+            (function(d,t) {
+            var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+            g.src="http://app.chaskiq.test:3000/embed.js"
+            s.parentNode.insertBefore(g,s);
+            g.onload=function(){
+                new window.ChaskiqMessengerEncrypted({
+                domain: 'http://app.chaskiq.test:3000',
+                ws:  'ws://app.chaskiq.test:3000/cable',
+                app_id: "5CJz8w7LN7sdSHtXJTn8DnkE",
+                data: "YOUR_ENCRYPTED_JWE_DATA",
+                lang: "USER_LANG_OR_DEFAULTS_TO_BROWSER_LANG" 
+                })
+            }
+            })(document,"script");
             
             $(document).ready(function () {
                 $('#investment-tips-carousel').carousel({
